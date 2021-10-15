@@ -1,15 +1,25 @@
 org: santhosh15
 app: hands-on
 service: content-request-api
-frameworkVersion: '2'
+frameworkVersion: "2"
+
+custom:
+  appName: "${param:APP_NAME}-${sls:stage}"
 
 provider:
   name: aws
   runtime: nodejs12.x
-  lambdaHashingVersion: '20201221'
+  lambdaHashingVersion: "20201221"
+  environment:
+    APP_NAME: ${self:custom.appName}
+    SMTP_HOST: ${param:SMTP_HOST}
+    SMTP_PORT: ${param:SMTP_PORT}
+    SMTP_USERNAME: ${param:SMTP_USERNAME}
+    SMTP_PASSWORD: ${param:SMTP_PASSWORD}
+    EMAIL_TO: ${param:MY_EMAIL}
 
 functions:
   api:
     handler: handler.handler
     events:
-      - httpApi: '*'
+      - httpApi: "*"
