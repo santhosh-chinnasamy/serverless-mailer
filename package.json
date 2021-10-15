@@ -1,7 +1,20 @@
 {
-  "name": "content-request-api",
+  "name": "serverless-mailer",
   "version": "1.0.0",
-  "description": "",
+  "description": "serverless mail application with aws as provider",
+  "main": "handler.js",
+  "author": "Santhosh Chinnasamy",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/santhosh-chinnasamy/serverless-mailer.git"
+  },
+  "keywords": [
+    "express",
+    "serverless",
+    "nodemailer",
+    "aws"
+  ],
   "dependencies": {
     "express": "^4.17.1",
     "nodemailer": "^6.7.0",

@@ -28,9 +28,13 @@ router.post("/mail", async (req, res, next) => {
     subject: subject ? `${subject} - ${APP_NAME}` : `no subject - ${APP_NAME}`,
     message,
   };
-  await sendEmail(emailParams);
 
-  return res.status(200).json(emailParams);
+  try {
+    await sendEmail(emailParams);
+    return res.status(200).json(emailParams);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 });
 
 module.exports = router;
