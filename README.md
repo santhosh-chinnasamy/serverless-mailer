@@ -35,39 +35,6 @@ and then deploy with:
 serverless deploy
 ```
 
-After running deploy, you should see output similar to:
-
-```bash
-Serverless: Packaging service...
-Serverless: Excluding development dependencies...
-Serverless: Creating Stack...
-Serverless: Checking Stack create progress...
-........
-Serverless: Stack create finished...
-Serverless: Uploading CloudFormation file to S3...
-Serverless: Uploading artifacts...
-Serverless: Uploading service aws-node-express-api.zip file to S3 (711.23 KB)...
-Serverless: Validating template...
-Serverless: Updating Stack...
-Serverless: Checking Stack update progress...
-.................................
-Serverless: Stack update finished...
-Service Information
-service: aws-node-express-api
-stage: dev
-region: us-east-1
-stack: aws-node-express-api-dev
-resources: 12
-api keys:
-  None
-endpoints:
-  ANY - https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
-functions:
-  api: aws-node-express-api-dev-api
-layers:
-  None
-```
-
 _Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [`httpApi` event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api/).
 
 ### Invocation
@@ -84,7 +51,7 @@ Which should result in the following response:
 {"message":"Hello from root!"}
 ```
 
-Calling the `/hello` path with:
+Calling the `/` path with:
 
 ```bash
 curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/hello
@@ -93,7 +60,7 @@ curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/hello
 Should result in the following response:
 
 ```bash
-{"message":"Hello from path!"}
+{"message":"Hello from serverless 2.0!"}
 ```
 
 If you try to invoke a path or method that does not have a configured handler, e.g. with:
@@ -108,6 +75,19 @@ You should receive the following response:
 {"error":"Not Found"}
 ```
 
+To send email
+
+```bash
+curl -X POST \
+  'https://xxxxxxx.execute-api.us-east-1.amazonaws.com/mail' \
+  -H 'content-type: application/json' \
+  -H 'Content-Type: application/json; charset=utf-8' \
+  -d '{
+  "email": "test@mail.in",
+  "subject": "hey there",
+  "message": "hello i am from serverless api"
+}'
+```
 ### Local development
 
 It is also possible to emulate API Gateway and Lambda locally by using `serverless-offline` plugin. In order to do that, execute the following command:
